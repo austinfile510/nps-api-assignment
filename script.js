@@ -12,14 +12,16 @@ function displayResults(responseJson) {
   console.log(responseJson);
   $('#results-list').empty();
   for (i = 0; i < responseJson.data.length; i++){
+    const address = responseJson.data[i].addresses.find(address => address.type == "Physical")
     $('#results-list').append(`
     <li><h3>${responseJson.data[i].fullName}</h3>
     <p>${responseJson.data[i].description}</p>
-    <p>Address:</p>
+    <h4>Address:</h4>
 
     <p>${responseJson.data[i].fullName}</p>
-    <p>${responseJson.data[i].addresses[0].line1}</p>
-    <p>${responseJson.data[i].addresses[0].city}, ${responseJson.data[i].addresses[0].stateCode} ${responseJson.data[i].addresses[0].postalCode}</p>
+    <p>${address.line1}</p>
+    <p>${address.line2}</p>
+    <p>${address.city}, ${address.stateCode} ${address.postalCode}</p>
     
     <br><a href = '${responseJson.data[i].url}'>Click here for more information on ${responseJson.data[i].fullName}</a>
     </li>
