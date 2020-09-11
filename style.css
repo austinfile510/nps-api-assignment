@@ -6,6 +6,10 @@ error-message {
     color: red;
 }
 
+h1 {
+    text-align: center;
+}
+
 ul {
     list-style: 
     padding: 0;

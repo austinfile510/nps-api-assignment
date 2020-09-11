@@ -1,3 +1,5 @@
+'use strict';
+
 const apiKey = "YRYtdbJtVucbWg683N3hnbygIUZKyn8fdqFcNkiB";
 const searchURL = "https://developer.nps.gov/api/v1/parks";
 
@@ -11,17 +13,24 @@ function formatQueryParams(params) {
 function displayResults(responseJson) {
   console.log(responseJson);
   $('#results-list').empty();
-  for (i = 0; i < responseJson.data.length; i++){
+  for (let i = 0; i < responseJson.data.length; i++){
     const address = responseJson.data[i].addresses.find(address => address.type == "Physical")
+    let addressHTML;
+    if (address) {
+      addressHTML = `
+      <p>${address.line1}</p>
+      <p>${address.line2}</p>
+      <p>${address.line3}</p>
+      <p>${address.city}, ${address.stateCode} ${address.postalCode}</p>
+      `
+    }
     $('#results-list').append(`
     <li><h3>${responseJson.data[i].fullName}</h3>
     <p>${responseJson.data[i].description}</p>
     <h4>Address:</h4>
 
     <p>${responseJson.data[i].fullName}</p>
-    <p>${address.line1}</p>
-    <p>${address.line2}</p>
-    <p>${address.city}, ${address.stateCode} ${address.postalCode}</p>
+    ${addressHTML}
     
     <br><a href = '${responseJson.data[i].url}'>Click here for more information on ${responseJson.data[i].fullName}</a>
     </li>
